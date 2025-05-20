@@ -2717,9 +2717,33 @@ class HydraSource {
     }).catch(err => console.log('could not get camera', err));
   }
 
+  deInitVideo(url = '', params) {
+    const id = `video-${this.label}`;
+  }
+
+  deInitVideo(url = '', params) {
+    const id = `video-${this.label}`;
+    const existing = document.getElementById(id);
+
+    if (existing) {
+      // console.log(`Removing video ${id}`);
+      existing.remove();
+    }
+  }
+
   initVideo(url = '', params) {
     // const self = this
+    const id = `video-${this.label}`;
+    const existing = document.getElementById(id); // console.log(`URL: ${url}`);
+
+    if (existing && existing.src === url) {
+      // console.log(`Existing.src: ${existing.src}`);
+      // console.log(`Video ${id} is already initialized, skipping.`);
+      return; // skip if already initialized with same url
+    }
+
     const vid = document.createElement('video');
+    vid.id = id;
     vid.crossOrigin = 'anonymous';
     vid.autoplay = true;
     vid.loop = true;
@@ -2734,7 +2758,7 @@ class HydraSource {
       });
       this.dynamic = true;
     });
-    vid.src = url;
+    vid.src = url; // console.log(`Video ${id} initialized.`);
   }
 
   initImage(url = '', params) {
