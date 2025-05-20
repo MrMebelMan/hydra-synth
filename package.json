@@ -1,5 +1,5 @@
 {
-  "name": "hydra-synth",
+  "name": "hydra-synth-hazmat",
   "version": "1.3.29",
   "description": "base synth for hydra-editor",
   "type": "module",
