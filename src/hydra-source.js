@@ -35,9 +35,28 @@ class HydraSource {
       .catch(err => console.log('could not get camera', err))
   }
 
+  deInitVideo (url = '', params) {
+    const id = `video-${this.label}`;
+    const existing = document.getElementById(id);
+    if (existing) {
+        existing.remove();
+    }
+  }
+
   initVideo (url = '', params) {
-    // const self = this
+    if (this._video) {
+      this._video.pause();
+      this._video.srcObject = null;
+      this._video.remove();
+      this._video = null;
+    }
+    const id = `video-${this.label}`;
+    const existing = document.getElementById(id);
+      if (existing && existing.src === url) {
+        return; // skip if already initialized with same url
+    }
     const vid = document.createElement('video')
+    vid.id = id;
     vid.crossOrigin = 'anonymous'
     vid.autoplay = true
     vid.loop = true
@@ -49,6 +68,7 @@ class HydraSource {
       this.dynamic = true
     })
     vid.src = url
+    this._video = vid;
   }
 
   initImage (url = '', params) {
